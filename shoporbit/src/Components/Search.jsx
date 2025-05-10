@@ -1,13 +1,18 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import ShimmerCard from "./Cardshimmerui"
 
 function Search(){
 
     const [text,setText]=useState('')
     const [item,setItem]=useState([])
+   
+    
+  
 
      useEffect(()=>{
+
           const fetchProducts = async () => {
             try {
               const res = await fetch('https://dummyjson.com/products');
@@ -54,11 +59,17 @@ function Search(){
       placeholder="Search here..."
       className="w-full max-w-xl border border-gray-300 p-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-2xl"
       onChange={(e) => setText(e.target.value)}
+    
     />
   </div>
 
   {/* Products Grid */}
   <div className="flex flex-wrap justify-center gap-8 p-4">
+
+  
+    
+
+    {searcheditem.length===0 && <div><p>product not found... </p> </div>}
     {searcheditem.map((item) => (
       <div
         key={item.id}

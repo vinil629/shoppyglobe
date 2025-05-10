@@ -5,6 +5,7 @@ import { Link} from "react-router-dom";
 import Search from "./Search";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utlis/cartSlice";
+import FullScreenShimmer from "./Shimmerui";
 
 import Practise from "./Practise";
 
@@ -100,32 +101,48 @@ function handleAddBook(item){
       {error && (
         <p className="text-center text-xl sm:text-2xl text-red-600 transition-all duration-700 ease-out mt-5">
           {error}
+         {<FullScreenShimmer/>}
         </p>
       )}
 
       {/* Heading */}
-      <h1 className="capitalize font-bold text-xl sm:text-2xl md:text-3xl text-center p-4 md:p-6 mt-4">
-        Products
-      </h1 >
+     
 
       {/* Loading Message */}
       {loading && (
-        <p className="text-center text-xl sm:text-2xl text-red-600 transition-all duration-700 ease-out">
+        <div>
+        <p className="text-center text-xl p-3 sm:text-2xl text-red-400 transition-all duration-700 ease-out">
           Fetching your data...
         </p>
+        {<FullScreenShimmer/>}
+        
+        
+        </div>
       )}
 
+      {loading&&( <h1 className="capitalize font-bold text-xl sm:text-2xl md:text-3xl text-center p-4 md:p-6 mt-4">
+        Products
+      </h1 >)}
+
       {/* Search Input */}
-      <div className="mt-6 px-4 sm:px-8">
-        <input
-          type="text"
-          placeholder="Search here for products"
-          className="w-full sm:w-96 p-3 border border-gray-300 rounded-md shadow-sm hover:shadow-md transition text-xl bg-white "
-          onChange={(e) => setText(e.target.value)}
-        />
+
+
+      <h2  className="capitalize  font-extralight text-black-500 sm:text-xl md:text-xl text-center p-4 md:p-6 mt-4 ">From every corner of the globe to your cart – discover it at Shoporbit</h2>
+
+
+        <div className="mt-3 px-4 sm:px-8">
+       <div className="flex justify-center mt-6">
+  <input
+    type="text"
+    placeholder="Search here for products"
+    className="w-full sm:w-96 p-3 border border-gray-300 rounded-md shadow-sm hover:shadow-md transition text-xl bg-white"
+    onChange={(e) => setText(e.target.value)}
+  />
+</div>
+
       </div>
 
-      {/* Products Grid */}
+    
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
         {searcheditem.map((item) => (
           <div
@@ -155,9 +172,17 @@ function handleAddBook(item){
               </button>
             </div>
           </div>
+        
         ))}
       </div>
     </div>
+
+    
+
+      
+    
+      
+      
        
             
                

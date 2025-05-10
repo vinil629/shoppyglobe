@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
+import ShimmerCard from "./Cardshimmerui"
 
 function ProductItem(){
 
@@ -16,6 +17,8 @@ function ProductItem(){
 
         try{
           const res= await fetch('https://dummyjson.com/products')
+
+           
 
           
           const data=await res.json()
@@ -58,7 +61,7 @@ function ProductItem(){
 
 <div className="px-4 md:px-20 py-5">
 
-  {selecteditems.length === 0 && <p className="text-center">Loading...</p>}
+  {selecteditems.length === 0 &&<div> <p className="text-center">Loading...</p><ShimmerCard/></div>}
 
   <div className="w-full min-h-screen ">
     {selecteditems.map((item) => (

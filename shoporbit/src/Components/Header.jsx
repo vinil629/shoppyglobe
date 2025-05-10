@@ -56,7 +56,6 @@ function Header(){
   </ul>
 
 </div>
-<h2  className="capitalize  font-extralight text-black-500 sm:text-xl md:text-xl text-center p-4 md:p-6 mt-4 ">From every corner of the globe to your cart – discover it at Shoporbit</h2>
 
      
         
