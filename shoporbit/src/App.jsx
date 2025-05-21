@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import appStore from './utlis/appStore'
+import './index.css'; // ✅ Correct path to your Tailwind CSS file
+
 
 
 

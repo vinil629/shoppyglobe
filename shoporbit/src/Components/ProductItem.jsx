@@ -1,111 +1,73 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import ShimmerCard from "./Cardshimmerui"
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import ShimmerCard from "./Cardshimmerui";
+// Link to your CSS file
 
-function ProductItem(){
+function ProductItem() {
+  const [items, setItems] = useState([]);
+  const { id } = useParams();
 
-    const [items,setitems]=useState([])
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("https://dummyjson.com/products");
+        const data = await res.json();
+        setItems(data.products);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchProducts();
+  }, []);
 
-    const {id}=useParams()
+  const selectedItems = items.filter((item) => item.id === parseInt(id));
 
-    console.log(id);
+  return (
+    <>
+      <h1 className="product-heading">Product Details</h1>
 
-    useEffect(()=>{
-      const fetchProducts = async () => {
-
-        try{
-          const res= await fetch('https://dummyjson.com/products')
-
-           
-
-          
-          const data=await res.json()
-          setitems(data.products)
-
-
-        }catch(error){
-          console.log(error)
-        }
-      
-          
-         
-       
-      };
-
-      fetchProducts()
-
-
-    },[])
-
-    console.log("items",items)
-
-    const selecteditems=items.filter((item)=>item.id===parseInt(id))
-    console.log("selecteditems",selecteditems)
-
-
-
-
-
-   
-    
-  
-
-  
-    return(
-        <>
-        
-        
-      <h1 className="text-3xl font-serif text-gray-800 mt-4 text-center">Product Details</h1>
-
-<div className="px-4 md:px-20 py-5">
-
-  {selecteditems.length === 0 &&<div> <p className="text-center">Loading...</p><ShimmerCard/></div>}
-
-  <div className="w-full min-h-screen ">
-    {selecteditems.map((item) => (
-      <div key={item.id} className="flex flex-col md:flex-row shadow-lg rounded-2xl p-6 m-4 ">
-        
-        {/* Image Section */}
-        <div className="flex-shrink-0 flex justify-center">
-          <img
-            src={item.images[0]}
-            alt={item.title}
-            className="h-60 w-60 object-cover rounded-xl border border-gray-300"
-          />
-        </div>
-
-        {/* Text Section */}
-        <div className="mt-6 md:mt-0 md:ml-10 flex flex-col justify-between">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">{item.title}</h1>
-
-          <div className="space-y-1 text-gray-700">
-            <p><span className="font-semibold">Category:</span> {item.category}</p>
-            <p><span className="font-semibold">Brand:</span> {item.brand}</p>
-            <p><span className="font-semibold">Rating:</span> ⭐ {item.rating}</p>
-            <p className="text-xl font-bold text-green-700">${item.price}</p>
+      <div className="product-container">
+        {selectedItems.length === 0 && (
+          <div>
+            <p className="loading-text">Loading...</p>
+            <ShimmerCard />
           </div>
+        )}
 
-          <p className="mt-4 text-gray-600 font-serif">{item.description}</p>
+        {selectedItems.map((item) => (
+          <div key={item.id} className="product-card">
+            <div className="product-image-container">
+              <img
+                src={item.images[0]}
+                alt={item.title}
+                className="product-image"
+              />
+            </div>
 
-          <div className="mt-3">
-            <Link to="/">
-              <button className="bg-red-400 text-white p-2 rounded-xl capitalize cursor-pointer hover:bg-red-500 transition">
-                Back to Store
-              </button>
-            </Link>
+            <div className="product-info">
+              <h2 className="product-title">{item.title}</h2>
+
+              <div className="product-details">
+                <p><strong>Category:</strong> {item.category}</p>
+                <p><strong>Brand:</strong> {item.brand}</p>
+                <p><strong>Rating:</strong> ⭐ {item.rating}</p>
+                <p className="product-price">${item.price}</p>
+              </div>
+
+              <p className="product-description">{item.description}</p>
+
+              <div className="back-button-container">
+                <Link to="/">
+                  <button className="back-button">Back to Store</button>
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    ))}
-  </div>
-</div>
-
-        
-        
-        </>
-    )
+    </>
+  );
 }
 
-export default ProductItem
+export default ProductItem;
